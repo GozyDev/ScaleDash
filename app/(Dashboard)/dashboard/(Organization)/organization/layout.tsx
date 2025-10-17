@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { poppins } from "@/lib/font";
 import "@/app/globals.css";
 import OrganizationHeader from "@/components/OrganizationHeader";
 
@@ -14,11 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${poppins.className} antialiased`}>
-        <OrganizationHeader/>
-        {children}
-        </body>
-    </html>
+    <div>
+      <OrganizationHeader />
+      {children}
+    </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { ChevronRight, Funnel } from "lucide-react";
 
 type Project = {
   id: string;
@@ -18,6 +19,8 @@ export default function OrgProjectsPage() {
 
   const [orgName, setOrgName] = useState("Organization");
   const [projects, setProjects] = useState<Project[]>([]);
+  const [projectPassword, setProjectPassword] = useState("");
+  const [description, setDescription] = useState("");
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<"all" | "active" | "archived">("all");
   const [loading, setLoading] = useState(false);
@@ -67,10 +70,20 @@ export default function OrgProjectsPage() {
       const res = await fetch("/api/projects", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, type: ptype, status, orgId }),
+        body: JSON.stringify({
+          title,
+          orgId,
+          project_password: projectPassword,
+          description: description || null,
+        }),
       });
-      if (!res.ok) throw new Error("Create failed");
+      if (!res.ok) {
+        const txt = await res.text();
+        throw new Error(txt || "Create failed");
+      }
       setTitle("");
+      setProjectPassword("");
+      setDescription("");
       setShowCreate(false);
       await loadProjects();
     } catch (err: any) {
@@ -124,21 +137,13 @@ export default function OrgProjectsPage() {
               />
             </div>
 
-            <select
-              value={filter}
-              onChange={(e) => setFilter(e.target.value as any)}
-              className="bg-cardC px-2 py-1 rounded-md"
-            >
-              <option value="all">All</option>
-              <option value="active">Active</option>
-              <option value="archived">Archived</option>
-            </select>
+         <Funnel size={15} fill="white" className="cursor-pointer" />
           </div>
 
           <div className="flex items-center gap-4">
             <button
               onClick={() => setShowCreate(true)}
-              className="bg-primaryC px-4 py-2 rounded-md text-white"
+              className="bg-primaryC px-6 cursor-pointer py-1 rounded-sm text-white"
             >
               + New project
             </button>
@@ -151,11 +156,11 @@ export default function OrgProjectsPage() {
             <div className="text-neutral-500">No projects</div>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1  lg:grid-cols-2 xl:grid-cols-3  gap-4">
             {filtered.map((p) => (
               <div
                 key={p.id}
-                className="bg-cardC p-4 rounded-lg border border-neutral-700"
+                className="bg-cardC cursor-pointer border border-neutral-700 rounded-lg p-4  relative h-[176] group"
               >
                 <div className="flex items-start justify-between">
                   <div>
@@ -167,9 +172,9 @@ export default function OrgProjectsPage() {
                   <div>
                     <a
                       href={`/dashboard/org/${orgId}/project/${p.id}`}
-                      className="text-primaryC"
+                      className="text-textNb group-hover:text-primaryC transform group-hover:translate-x-3.5 "
                     >
-                      Open
+                      <ChevronRight />
                     </a>
                   </div>
                 </div>
@@ -182,52 +187,121 @@ export default function OrgProjectsPage() {
       {/* Create modal */}
       {showCreate && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className="bg-neutral-900 p-6 rounded-lg w-full max-w-lg">
-            <h3 className="text-lg font-semibold mb-2">Create project</h3>
-            <form onSubmit={createProject} className="space-y-3">
-              <input
-                className="w-full px-3 py-2 bg-cardC rounded-md"
-                placeholder="Project title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-              <select
-                value={ptype}
-                onChange={(e) => setPtype(e.target.value)}
-                className="w-full px-3 py-2 bg-cardC rounded-md"
-              >
-                <option>Feature</option>
-                <option>Bugfix</option>
-                <option>Research</option>
-                <option>Chore</option>
-              </select>
-              <select
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                className="w-full px-3 py-2 bg-cardC rounded-md"
-              >
-                <option value="active">Active</option>
-                <option value="archived">Archived</option>
-              </select>
-
-              {error && <div className="text-red-400">{error}</div>}
-
-              <div className="flex justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={() => setShowCreate(false)}
-                  className="px-3 py-2 bg-neutral-800 rounded-md"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-primaryC text-white rounded-md"
-                >
-                  Create
-                </button>
+          <div className="bg-neutral-900 text-neutral-100 rounded-lg w-full max-w-3xl shadow-lg border border-neutral-800">
+            <div className="p-6 space-y-4">
+              <div>
+                <h3 className="text-xl font-semibold">Create a new project</h3>
+                <p className="text-sm text-neutral-400 mt-1">
+                  Your project will have its own workspace and metadata. Provide
+                  a name, short description and a project password for access.
+                </p>
               </div>
-            </form>
+
+              <form onSubmit={createProject} className="grid gap-4">
+                {/* Title */}
+                <div className="grid sm:grid-cols-3 gap-3 items-start">
+                  <label className="text-sm text-neutral-300 pt-2">
+                    Project name
+                  </label>
+                  <div className="sm:col-span-2">
+                    <input
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      placeholder="Project name"
+                      className="w-full px-3 py-2 bg-cardC border border-cardCB rounded-md outline-none placeholder-neutral-500 text-neutral-100"
+                    />
+                    <p className="text-xs text-neutral-500 mt-2">
+                      A short, unique name for this project.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Project password */}
+                <div className="grid sm:grid-cols-3 gap-3 items-start">
+                  <label className="text-sm text-neutral-300 pt-2">
+                    Project password
+                  </label>
+                  <div className="sm:col-span-2">
+                    <input
+                      value={projectPassword}
+                      onChange={(e) => setProjectPassword(e.target.value)}
+                      placeholder="Set a project password (optional)"
+                      className="w-full px-3 py-2 bg-cardC border border-cardCB rounded-md outline-none text-neutral-100"
+                      type="password"
+                    />
+                    <p className="text-xs text-neutral-500 mt-2">
+                      Optional: simple access key for the project (not DB
+                      password).
+                    </p>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <div className="grid sm:grid-cols-3 gap-3 items-start">
+                  <label className="text-sm text-neutral-300 pt-2">
+                    Description
+                  </label>
+                  <div className="sm:col-span-2">
+                    <textarea
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      placeholder="Short project description"
+                      className="w-full px-3 py-2 bg-cardC border border-cardCB rounded-md outline-none text-neutral-100 min-h-[88px] resize-none"
+                    />
+                    <p className="text-xs text-neutral-500 mt-2">
+                      Optional description for this project.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Project type & status (small) */}
+                {/* <div className="grid sm:grid-cols-3 gap-3 items-center">
+                  <label className="text-sm text-neutral-300">Type</label>
+                  <div className="sm:col-span-2 flex gap-2">
+                    <select
+                      value={ptype}
+                      onChange={(e) => setPtype(e.target.value)}
+                      className="flex-1 px-3 py-2 bg-cardC border border-cardCB rounded-md outline-none text-neutral-100"
+                    >
+                      <option>Feature</option>
+                      <option>Bugfix</option>
+                      <option>Research</option>
+                      <option>Chore</option>
+                    </select>
+
+                    <select
+                      value={status}
+                      onChange={(e) => setStatus(e.target.value)}
+                      className="w-36 px-3 py-2 bg-cardC border border-cardCB rounded-md outline-none text-neutral-100"
+                    >
+                      <option value="active">Active</option>
+                      <option value="archived">Archived</option>
+                    </select>
+                  </div>
+                </div> */}
+
+                {error && <div className="text-sm text-red-400">{error}</div>}
+
+                <div className="flex justify-between items-center pt-2 border-t border-neutral-800">
+                  <button
+                    type="button"
+                    onClick={() => setShowCreate(false)}
+                    className="px-3 py-2 rounded-md bg-neutral-800 text-neutral-300 border border-cardCB hover:bg-cardCB"
+                  >
+                    Cancel
+                  </button>
+
+                  <div className="flex gap-2">
+                    <button
+                      type="submit"
+                      className="px-4 py-2 rounded-md bg-primaryC hover:bg-emerald-700 text-white"
+                    >
+                      Create project
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       )}

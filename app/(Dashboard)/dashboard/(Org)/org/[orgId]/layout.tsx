@@ -8,30 +8,29 @@ export default async function OrgLayout({
   params,
 }: {
   children: ReactNode;
-  params: { orgId: string };
+  params: Promise<{ orgId: string }>;
 }) {
-  const {orgId} = params
-  console.log('ID',orgId)
+  const { orgId } = await params;
   const supabase = await createClient();
-  const { data: org, error } = await supabase
+  const { data: orgs, error } = await supabase
     .from("tenants")
-    .select("id, name, plan")
-    .eq("id", orgId)
-    .single();
+    .select("id, name, plan");
 
-    if(error){
-        console.log('Error',error.message)
-    }
+  if (error) {
+    console.log("Error", error.message);
+  }
+
+  console.log("Org", orgs);
 
   // handle if org not found: redirect or show fallback
-  if (!org) {
+  if (!orgs) {
     // optional: throw or show fallback UI
   }
 
   return (
     <>
       {/* OrgHeader can be a server component that accepts org */}
-      <OrgHeader org={org} />
+      <OrgHeader orgs={orgs} orgId={orgId} />
       <main>{children}</main>
     </>
   );

@@ -1,7 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ChevronDown, Settings, Users, Building } from "lucide-react";
+
+import {Settings} from "lucide-react";
 
 const OrganizationHeader = () => {
   return (
