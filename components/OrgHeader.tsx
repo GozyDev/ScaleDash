@@ -34,7 +34,7 @@ export default function OrgHeader({
 
   // helper navigation
   const goToOrg = (id: string) => router.push(`/dashboard/org/${id}`);
-  const goToAll = () => router.push("/dashboard/organization");
+  const goToAll = () => router.push("/dashboard/organizations");
 
   return (
     <header className="flex justify-between items-center bg-neutral-900 text-neutral-100 px-6 py-3 border-b border-gray-800/70 backdrop-blur-sm">
@@ -137,7 +137,7 @@ export default function OrgHeader({
 
                 <DropdownMenuItem className="p-0">
                   <button
-                    onClick={() => goToAll()}
+                    onClick={() => router.push("/dashboard/new")}
                     className="w-full text-left px-3 py-2 hover:bg-cardCB text-[13px] flex items-center gap-2"
                   >
                     <Plus className="w-4 h-4" /> New organization
