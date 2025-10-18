@@ -3,15 +3,12 @@
 import React, { useEffect, useState } from "react";
 import NewProjectHeader from "./NewProjectHeader";
 import { useRouter } from "next/navigation";
-import { CircleCheck } from "lucide-react";
+import { CircleCheck, RefreshCcw } from "lucide-react";
 
 type Org = { id: string; name: string; plan?: string };
 
-const NewProjectModal = ({ initialOrgId }: { initialOrgId?: string }) => {
+const NewProjectModal = ({ orgId }: { orgId: string }) => {
   const [orgs, setOrgs] = useState<Org[]>([]);
-  const [selectedOrg, setSelectedOrg] = useState<string | null>(
-    initialOrgId ?? null
-  );
   const [title, setTitle] = useState("");
   const [error, setError] = useState("");
   const [projectPassword, setProjectPassword] = useState("");
@@ -20,6 +17,9 @@ const NewProjectModal = ({ initialOrgId }: { initialOrgId?: string }) => {
   const [loadingOrgs, setLoadingOrgs] = useState(false);
   const [creating, setCreating] = useState(false);
   const [query, setQuery] = useState("");
+
+  const selectedOrg = orgs.find((o) => o.id === orgId);
+  console.log("Selected Org", selectedOrg);
 
   useEffect(() => {
     loadOrgs();
@@ -34,7 +34,6 @@ const NewProjectModal = ({ initialOrgId }: { initialOrgId?: string }) => {
       setOrgs(json.organizations ?? []);
       // pick first if none selected
       if (!selectedOrg && (json.organizations?.length ?? 0) > 0) {
-        setSelectedOrg(json.organizations[0].id);
       }
     } catch (err) {
       console.error(err);
@@ -56,7 +55,7 @@ const NewProjectModal = ({ initialOrgId }: { initialOrgId?: string }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           title,
-          orgId: selectedOrg,
+          orgId:orgId,
           project_password: projectPassword || null,
           description: description || null,
         }),
@@ -68,7 +67,7 @@ const NewProjectModal = ({ initialOrgId }: { initialOrgId?: string }) => {
       const json = await res.json();
       // optional: route to new project page (if API returns id)
       if (json?.project?.id) {
-        router.push(`/dashboard/org/${selectedOrg}/project/${json.project.id}`);
+        router.push(`/dashboard/org/${orgId}/`);
         return;
       }
       // fallback: reload organization page
@@ -88,7 +87,7 @@ const NewProjectModal = ({ initialOrgId }: { initialOrgId?: string }) => {
 
   return (
     <div className=" h-screen flex items-start justify-center py-24 bg-neutral-900 overflow-y-scroll">
-      <NewProjectHeader orgs={orgs} orgId={selectedOrg ?? undefined} />
+      <NewProjectHeader orgs={orgs} orgId={orgId ?? undefined} />
       <div className="bg-cardC/60 h-max text-neutral-100 rounded-lg w-full max-w-3xl shadow-lg border border-neutral-800">
         <div className="p-6 space-y-4">
           <div>
@@ -106,53 +105,24 @@ const NewProjectModal = ({ initialOrgId }: { initialOrgId?: string }) => {
                 Organization
               </label>
               <div className="sm:col-span-2">
-                {/* search + select UI */}
-                <div className="mb-2 flex gap-2">
-                  <input
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search organizations"
-                    className="flex-1 px-3 py-2 bg-cardC border border-cardCB rounded-md outline-none placeholder-neutral-500 text-neutral-100"
-                  />
-                  <button
-                    type="button"
-                    onClick={loadOrgs}
-                    className="px-3 py-2 bg-neutral-800 rounded-md"
-                  >
-                    Refresh
-                  </button>
-                </div>
-
-                <div className="w-full">
-                  {loadingOrgs ? (
-                    <div className="text-sm text-neutral-500">
-                      Loading organizations…
-                    </div>
-                  ) : (
-                    <div className={`grid gap-2 h-[150px] ${filteredOrgs.length > 3 ? 'overflow-y-scroll': 'h-max' }`}>
-                      {filteredOrgs.map((o) => (
-                        <button
-                          key={o.id}
-                          type="button"
-                          onClick={() => setSelectedOrg(o.id)}
-                          className={`w-full text-left px-3 py-2 rounded-md ${
-                            selectedOrg === o.id
-                              ? "bg-neutral-800 border border-primaryC"
-                              : "hover:bg-cardCB"
-                          }`}
-                        >
-                          <div className="flex items-center justify-between">
-                            <div className="text-sm font-medium flex items-center gap-2">
-                              {selectedOrg === o.id && <CircleCheck size={15} />} {o.name}
-                            </div>
-                            <div className="text-xs text-neutral-400">
-                              {o.plan ?? "Free Plan"}
-                            </div>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                <div className="w-full h-[40] px-3 py-2 bg-cardC border border-cardCB rounded-md outline-none placeholder-neutral-500 text-neutral-100 cursor-pointer flex items-center">
+                  <div className="text-sm flex gap-1">
+                    {selectedOrg ? (
+                      <div className="text-sm items-center flex gap-2">
+                        <span className="text-[13px]">{selectedOrg?.name}</span>{" "}
+                        <span className="border py-1 px-2 rounded-xl text-[10px]">
+                          {selectedOrg?.plan}
+                        </span>{" "}
+                      </div>
+                    ) : (
+                      <>
+                        <RefreshCcw
+                          size={15}
+                          className="animate-spin text-textNc"
+                        />
+                      </>
+                    )}
+                  </div>
                 </div>
 
                 <p className="text-xs text-neutral-500 mt-2">

@@ -46,7 +46,7 @@ export default function NewProjectHeader({ orgs: initialOrgs = [], orgId }: { or
     return orgs.filter((o: Org) => o.name.toLowerCase().includes(term));
   }, [orgs, q]);
 
-  const goToOrg = (id: string) => router.push(`/dashboard/org/${id}`);
+  const goToOrg = (id: string) => router.push(`/dashboard/new/${id}`);
   const goToAll = () => router.push("/dashboard/organization");
 
   return (

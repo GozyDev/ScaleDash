@@ -137,12 +137,12 @@ export default function OrgProjectsPage() {
               />
             </div>
 
-         <Funnel size={15} fill="white" className="cursor-pointer" />
+            <Funnel size={15} fill="white" className="cursor-pointer" />
           </div>
 
           <div className="flex items-center gap-4">
             <button
-              onClick={() => setShowCreate(true)}
+              onClick={() => router.push(`/dashboard/new/${orgId}`)}
               className="bg-primaryC px-6 cursor-pointer py-1 rounded-sm text-white"
             >
               + New project
