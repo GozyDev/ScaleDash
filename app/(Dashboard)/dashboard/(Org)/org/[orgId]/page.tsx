@@ -171,7 +171,7 @@ export default function OrgProjectsPage() {
                   </div>
                   <div>
                     <a
-                      href={`/dashboard/org/${orgId}/project/${p.id}`}
+                      href={`/dashboard/project/${p.id}`}
                       className="text-textNb group-hover:text-primaryC transform group-hover:translate-x-3.5 "
                     >
                       <ChevronRight />

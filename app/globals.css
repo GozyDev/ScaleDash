@@ -50,9 +50,11 @@
   --color-textNc:var(--textNc);
   --color-textNd:var(--textNd);
   --color-textNe:var(--textNe);
+  --color-bgPrimary:var(--bgPrimary)
 }
 
 :root {
+  --bgPrimary:#171717;
   --primaryC:#079264;
   --secondaryC:#f5f5f5;
   --cardC:#262626;
@@ -94,7 +96,6 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  
 
 }
 
