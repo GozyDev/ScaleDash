@@ -32,9 +32,9 @@ const NewOrgpage = () => {
   }
   return (
     <div>
-      <div className="flex  justify-center h-screen bg-neutral-900  py-[120px]">
+      <div className="flex  justify-center h-screen   py-[120px]">
         <NewHeader/>
-        <div className="bg-cardC/50 text-neutral-100 rounded-lg w-full max-w-3xl shadow-lg border border-neutral-800 h-max">
+        <div className="bg-cardC/60 text-neutral-100 rounded-lg w-full max-w-3xl shadow-lg border border-neutral-800 h-max">
           <div className="p-6 space-y-4">
             <div>
               <h3 className="text-xl font-semibold">

@@ -99,7 +99,7 @@ export default function OrgProjectsPage() {
   });
 
   return (
-    <div className="p-12 w-full bg-neutral-900 text-textNa">
+    <div className="p-12 w-full text-textNa">
       <div className="max-w-7xl mx-auto">
         <div className="mb-6">
           <h1 className="text-2xl">Projects</h1>
@@ -160,7 +160,7 @@ export default function OrgProjectsPage() {
             {filtered.map((p) => (
               <div
                 key={p.id}
-                className="bg-cardC cursor-pointer border border-neutral-700 rounded-lg p-4  relative h-[176] group"
+                className="bg-cardC/60 cursor-pointer border border-cardCB rounded-lg p-4  relative h-[176] group"
               >
                 <div className="flex items-start justify-between">
                   <div>

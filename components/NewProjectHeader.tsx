@@ -50,7 +50,7 @@ export default function NewProjectHeader({ orgs: initialOrgs = [], orgId }: { or
   const goToAll = () => router.push("/dashboard/organization");
 
   return (
-    <header className="flex justify-between items-center bg-neutral-900 text-neutral-100 px-6 py-3 border-b border-gray-800/70 fixed top-0 left-0 w-full">
+    <header className="flex justify-between items-center  text-neutral-100 px-6 py-3 border-b border-gray-800/70 fixed top-0 left-0 w-full">
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
           <Image src="/supabase-logo.svg" alt="Logo" width={20} height={20} />

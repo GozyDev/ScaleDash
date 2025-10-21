@@ -41,7 +41,7 @@ export default function OrganizationsPage() {
   );
 
   return (
-    <div className="min-h-screen p-12 bg-neutral-900 text-textNa">
+    <div className="min-h-screen p-12 text-textNa">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-3xl font-semibold">Your Organizations</h1>
@@ -99,7 +99,7 @@ export default function OrganizationsPage() {
             {filtered.map((org) => (
               <div
                 key={org.id}
-                className="flex  gap-4 bg-cardC border border-neutral-700 rounded-lg p-4  relative h-max group cursor-pointer"
+                className="flex  gap-4 bg-cardC/60 border border-cardCB rounded-lg p-4  relative h-max group cursor-pointer"
               >
                 <div className="w-9 h-9 rounded-full bg-black/70 border-cardCB flex items-center justify-center text-textNb">
                   <Boxes size={15} />

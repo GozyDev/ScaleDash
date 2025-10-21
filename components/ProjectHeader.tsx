@@ -60,7 +60,7 @@ export default function ProjectHeader({
   const goToProject = (id: string) => router.push(`/dashboard/project/${id}`);
   console.log(project);
   return (
-    <header className="fixed top-0 left-0 w-full flex justify-between items-center bg-neutral-900 text-neutral-100 px-6 py-3 border-b border-gray-800/70 backdrop-blur-sm">
+    <header className="fixed top-0 left-0 w-full flex justify-between items-center  text-neutral-100 px-6 py-3 border-b border-cardCB/80 backdrop-blur-sm">
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
           <Image src="/supabase-logo.svg" alt="Logo" width={20} height={20} />

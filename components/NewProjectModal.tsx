@@ -86,7 +86,7 @@ const NewProjectModal = ({ orgId }: { orgId: string }) => {
     : orgs;
 
   return (
-    <div className=" h-screen flex items-start justify-center py-24 bg-neutral-900 overflow-y-scroll">
+    <div className=" h-screen flex items-start justify-center py-24 overflow-y-scroll">
       <NewProjectHeader orgs={orgs} orgId={orgId ?? undefined} />
       <div className="bg-cardC/60 h-max text-neutral-100 rounded-lg w-full max-w-3xl shadow-lg border border-neutral-800">
         <div className="p-6 space-y-4">
