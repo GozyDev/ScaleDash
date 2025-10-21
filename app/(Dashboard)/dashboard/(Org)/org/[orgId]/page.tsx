@@ -99,7 +99,7 @@ export default function OrgProjectsPage() {
   });
 
   return (
-    <div className="min-h-screen p-12 bg-neutral-900 text-textNa">
+    <div className="p-12 w-full bg-neutral-900 text-textNa">
       <div className="max-w-7xl mx-auto">
         <div className="mb-6">
           <h1 className="text-2xl">Projects</h1>

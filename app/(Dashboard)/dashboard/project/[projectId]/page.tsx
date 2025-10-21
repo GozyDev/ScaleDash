@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
 
-const Projectpage = ({params}:{params:Promise<{projectId:string}>}) => {
+const Projectpage = ({
+  params,
+}: {
+  params: Promise<{ projectId: string }>;
+}) => {
   return (
-    <div>Projectpage</div>
-  )
-}
+    <div className="">
+      <h1 className="">hello</h1>
+    </div>
+  );
+};
 
-export default Projectpage
+export default Projectpage;
