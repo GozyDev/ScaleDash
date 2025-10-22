@@ -56,8 +56,8 @@
 
 :root {
   --bgPrimary: #0a0a0a;
-  --primaryC: #079264;
-  --primaryHC: #058359;
+  --primaryC: #327844;
+  --primaryHC: #2d693c;
   --cardICB: #404040;
   --cardC: #171717;
   --cardCB: #262626;
@@ -157,4 +157,10 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.butt{
+background:linear-gradient(35deg,#327844,#0a0a0a);
+border: #3278444e solid 0.5px ;
+cursor:pointer;
 }

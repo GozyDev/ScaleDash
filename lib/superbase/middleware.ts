@@ -39,19 +39,30 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.pathname.startsWith("/auth") &&
-    !request.nextUrl.pathname.startsWith("/error")&&
-    !request.nextUrl.pathname.startsWith("/dashboard/auth")&&
-     !request.nextUrl.pathname.startsWith("/comfirm_email")
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
+  const PUBLIC_PATHS = [
+    "/dashboard/auth/sign_in",
+    "/dashboard/auth/callback", // explicit callback
+    "/auth", // general auth pages
+    "/auth/", // if you have /auth/v1/callback
+    "/auth/v1", // supabase internal
+    "/api/auth", // allow server-side auth API routes
+    "/api/auth/", // wildcard
+    "/api/auth/google",
+    "/api", // allow other public APIs if needed
+    "/_next", // next internals
+    "/favicon.ico",
+    "/static",
+  ];
+
+  function isPublic(pathname: string) {
+    return PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(p));
+  }
+
+  if (!user && !isPublic(request.nextUrl.pathname)) {
     const url = request.nextUrl.clone();
-    url.pathname = "/dashboard/auth/sign_up";
+    url.pathname = "/dashboard/auth/sign_in";
     return NextResponse.redirect(url);
-  } 
+  }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is.
   // If you're creating a new response object with NextResponse.next() make sure to:

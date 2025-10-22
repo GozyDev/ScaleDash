@@ -48,7 +48,7 @@ export default function OrganizationsPage() {
 
           <button
             onClick={() => router.push("/dashboard/new")}
-            className="inline-flex items-center gap-2 bg-primaryC hover:bg-emerald-700 text-textNa px-4 py-2 rounded-md"
+            className="inline-flex items-center gap-2  text-textNa px-4 py-2 rounded-md butt"
           >
             <span className="text-2xl leading-none">+</span>
             <span>New organization</span>

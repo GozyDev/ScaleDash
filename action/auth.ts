@@ -25,7 +25,7 @@ export async function login(formData: FormData) {
   redirect("/");
 }
 
-// app/actions/signup.ts (server action)    
+// app/actions/signup.ts (server action)
 
 export async function signup(formData: FormData) {
   const supabase = await createClient();
@@ -38,11 +38,9 @@ export async function signup(formData: FormData) {
   if (error) {
     // keep simple: send user to an error page
     redirect(`/error?msg=${error.message}`);
-  }else{
-    redirect(`/comfirm_email?eml=${data.user?.email}`)
+  } else {
+    redirect(`/comfirm_email?eml=${data.user?.email}`);
   }
-    
-
 
   // optional: immediately create a lightweight profile row (no tenant yet)
   // OR you can wait until the user finishes Create Organization form
@@ -50,5 +48,7 @@ export async function signup(formData: FormData) {
   // await fetch('/api/create-tenant', { method: 'POST', body: JSON.stringify({ userId: data.user?.id }) })
 
   // redirect user to create-organization page (your desired flow)
-//   redirect("/create-organization");
+  //   redirect("/create-organization");
 }
+
+

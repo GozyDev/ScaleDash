@@ -1,4 +1,5 @@
 import { login } from "@/action/auth";
+import Google from "@/components/Google";
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -24,7 +25,7 @@ export default function LoginPage() {
               name="email"
               type="email"
               required
-              className="w-full px-3 py-2 pb-4 bg-cardCB   focus:outline-none   focus:border-b focus:border-primaryC rounded"
+              className="w-full px-3 py-2 pb-4 bg-cardCB/50   focus:outline-none   focus:border-b focus:border-primaryC rounded"
             />
           </div>
 
@@ -40,15 +41,18 @@ export default function LoginPage() {
               name="password"
               type="password"
               required
-              className="w-full px-3 py-2 pb-4 bg-cardCB   focus:outline-none   focus:border-b focus:border-primaryC rounded"
+              className="w-full px-3 py-2 pb-4 bg-cardCB/50   focus:outline-none   focus:border-b focus:border-primaryC rounded"
             />
           </div>
         </div>
 
-        <div className="flex gap-3 mt-9">
+        {/* Continue with Google Button */}
+        <Google />
+
+        <div className="flex gap-3 mt-6">
           <button
             formAction={login}
-            className="flex-1 bg-primaryC text-white py-2 px-4 rounded-md hover:bg-primaryHC transition-colors font-medium"
+            className="flex-1  text-white py-2 px-4 rounded-md  transition-colors font-medium butt"
           >
             Log in
           </button>

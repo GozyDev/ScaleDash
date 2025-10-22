@@ -143,7 +143,7 @@ export default function OrgProjectsPage() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => router.push(`/dashboard/new/${orgId}`)}
-              className="bg-primaryC px-6 cursor-pointer py-1 rounded-sm text-white"
+              className="inline-flex items-center gap-2  text-textNa px-4 py-2 rounded-md butt"
             >
               + New project
             </button>

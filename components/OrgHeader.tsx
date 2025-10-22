@@ -40,7 +40,13 @@ export default function OrgHeader({
     <header className="flex justify-between items-center text-neutral-100 px-6 py-3 border-b border-cardCB/80 backdrop-blur-sm">
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
-          <Image src="/supabase-logo.svg" alt="Logo" width={20} height={20} />
+          <Image
+            src="/Logo.png"
+            alt="Supabase Logo"
+            width={35}  
+            height={35}
+            className="text-white"
+          />
           <span className="font-light text-gray-700/50 text-lg">/</span>
         </div>
 

@@ -2,20 +2,21 @@ import React from "react";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import {Settings} from "lucide-react";
+import { Settings } from "lucide-react";
+import User from "./User";
 
-const OrganizationHeader = () => {
+const OrganizationHeader = async () => {
   return (
     <header className="flex justify-between items-center  text-neutral-100 px-6 py-3 border-b border-cardCB/80 backdrop-blur-sm">
       {/* Left Section - Logo and Breadcrumb */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <div className="">
             <Image
-              src="/supabase-logo.svg"
+              src="/Logo.png"
               alt="Supabase Logo"
-              width={20}
-              height={20}
+              width={35}
+              height={35}
               className="text-white"
             />
           </div>
@@ -23,7 +24,6 @@ const OrganizationHeader = () => {
         </div>
 
         <div className="flex items-center gap-2">
-        
           <p className="font-medium text-sm text-gray-100">Organizations</p>
           {/* <ChevronDown className="w-4 h-4 text-gray-400 cursor-pointer hover:text-gray-300" /> */}
         </div>
@@ -42,22 +42,7 @@ const OrganizationHeader = () => {
         </div>
 
         {/* User Avatar with Dropdown */}
-        <div className="flex items-center gap-3 pl-3 border-l border-gray-700/50">
-          <div className="relative group cursor-pointer">
-            <Avatar className="w-9 h-9 border-2 border-transparent group-hover:border-blue-500 transition-all duration-200">
-              <AvatarImage
-                src="https://github.com/shadcn.png"
-                alt="User Avatar"
-              />
-              <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-medium">
-                JD
-              </AvatarFallback>
-            </Avatar>
-
-            {/* Online Status Indicator */}
-            <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-neutral-900"></div>
-          </div>
-        </div>
+        <User />
       </div>
     </header>
   );

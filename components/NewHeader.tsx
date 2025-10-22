@@ -12,10 +12,10 @@ const NewHeader = () => {
         <div className="flex items-center gap-2">
           <div className="">
             <Image
-              src="/supabase-logo.svg"
+              src="/Logo.png"
               alt="Supabase Logo"
-              width={20}
-              height={20}
+              width={35}
+              height={35}
               className="text-white"
             />
           </div>
