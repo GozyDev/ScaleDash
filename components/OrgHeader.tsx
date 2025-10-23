@@ -1,17 +1,9 @@
-"use client";
-
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ChevronsUpDown, Plus, Settings } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
+import { Settings } from "lucide-react";
+import DropDownContent from "./DropDownContent";
+import User from "./User";
 
 type Org = { id: string; name: string; plan?: string };
 
@@ -22,20 +14,6 @@ export default function OrgHeader({
   orgs?: Org[];
   orgId?: string;
 }) {
-  const router = useRouter();
-  const [q, setQ] = useState("");
-
-  // responsive filtered list (simple, immediate)
-  const filtered = useMemo(() => {
-    const term = q.trim().toLowerCase();
-    if (!term) return orgs;
-    return orgs.filter((o: Org) => o.name.toLowerCase().includes(term));
-  }, [orgs, q]);
-
-  // helper navigation
-  const goToOrg = (id: string) => router.push(`/dashboard/org/${id}`);
-  const goToAll = () => router.push("/dashboard/organizations");
-
   return (
     <header className="flex justify-between items-center text-neutral-100 px-6 py-3 border-b border-cardCB/80 backdrop-blur-sm">
       <div className="flex items-center gap-3">
@@ -43,7 +21,7 @@ export default function OrgHeader({
           <Image
             src="/Logo.png"
             alt="Supabase Logo"
-            width={35}  
+            width={35}
             height={35}
             className="text-white"
           />
@@ -60,98 +38,7 @@ export default function OrgHeader({
             {orgs.find((o) => o.id === orgId)?.plan ?? "Free Plan"}
           </button>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="p-1 rounded-md">
-                <ChevronsUpDown className="w-4 h-4 text-gray-400" />
-              </button>
-            </DropdownMenuTrigger>
-
-            <DropdownMenuContent className="bg-cardC border-none text-textNa w-[22rem] min-w-[18rem] text-sm">
-              {/* Search input */}
-              <div className="px-2 py-2">
-                <div className="flex items-center gap-2 bg-cardC rounded-md px-2 py-1">
-                  <svg
-                    className="w-4 h-4 text-textNd/60"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <path
-                      d="M21 21l-4.35-4.35"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <circle
-                      cx="11"
-                      cy="11"
-                      r="6"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <input
-                    value={q}
-                    onChange={(e) => setQ(e.target.value)}
-                    placeholder="Find organization"
-                    className="bg-transparent outline-none px-2 text-sm w-full placeholder:text-textNd/50"
-                    aria-label="Search organizations"
-                  />
-                </div>
-              </div>
-
-              <DropdownMenuSeparator className="my-2 bg-cardCB" />
-
-              {/* List */}
-              <div className="max-h-48 overflow-auto">
-                {filtered.length === 0 && (
-                  <div className="px-3 py-2 text-xs text-textNd">
-                    No organizations
-                  </div>
-                )}
-
-                {filtered.map((org: Org) => (
-                  <DropdownMenuItem
-                    key={org.id}
-                    className="p-0"
-                    onSelect={(e) => {
-                      e.preventDefault();
-                      goToOrg(org.id);
-                    }}
-                  >
-                    <button className="w-full text-left px-3 py-2 hover:bg-cardCB text-[13px]">
-                      {org.name}
-                    </button>
-                  </DropdownMenuItem>
-                ))}
-              </div>
-
-              <DropdownMenuSeparator className="my-2 bg-cardCB" />
-
-              <div className="px-1">
-                <DropdownMenuItem className="p-0">
-                  <button
-                    onClick={() => goToAll()}
-                    className="w-full text-left px-3 py-2 hover:bg-cardCB text-[13px]"
-                  >
-                    All Organizations
-                  </button>
-                </DropdownMenuItem>
-
-                <DropdownMenuItem className="p-0">
-                  <button
-                    onClick={() => router.push("/dashboard/new")}
-                    className="w-full text-left px-3 py-2 hover:bg-cardCB text-[13px] flex items-center gap-2"
-                  >
-                    <Plus className="w-4 h-4" /> New organization
-                  </button>
-                </DropdownMenuItem>
-              </div>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <DropDownContent orgs={orgs} />
         </div>
       </div>
 
@@ -165,20 +52,7 @@ export default function OrgHeader({
           </button>
         </div>
 
-        <div className="flex items-center gap-3 pl-3 border-l border-gray-700/50">
-          <div className="relative group cursor-pointer">
-            <Avatar className="w-9 h-9 border-2 border-transparent group-hover:border-blue-500">
-              <AvatarImage
-                src="https://github.com/shadcn.png"
-                alt="User Avatar"
-              />
-              <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white">
-                JD
-              </AvatarFallback>
-            </Avatar>
-            <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-neutral-900" />
-          </div>
-        </div>
+        <User/>
       </div>
     </header>
   );

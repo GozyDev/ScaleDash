@@ -9,7 +9,7 @@ export async function GET() {
       redirectTo: "http://localhost:3000/dashboard/auth/callback/",
     },
   });
-  console.log("Data", data);
+
   if (error || !data?.url) return NextResponse.json({ error: error?.message });
   return NextResponse.redirect(data.url);
 }
