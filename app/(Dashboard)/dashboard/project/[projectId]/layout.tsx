@@ -1,4 +1,6 @@
+import { AppSidebar } from "@/components/AppSidebar";
 import ProjectHeader from "@/components/ProjectHeader";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { createClient } from "@/lib/superbase/superbase-server";
 
 // Next.js layout signature — params is an object, not a Promise
@@ -33,10 +35,20 @@ const ProjectLayout = async ({
   if (!project) return <div>Project not found</div>;
 
   return (
-    <div className="bg-bgPrimary text-textNa h-screen">
+    <SidebarProvider>
       <ProjectHeader orgs={orgs ?? []} project={project} />
-      {/* ... */}
-    </div>
+      <div className="text-textNa flex w-full">
+        <aside>
+          <AppSidebar />
+        </aside>
+        <main className=" flex-1 pt-[74px]">
+          <div className="flex w-full">
+            <SidebarTrigger/>
+            <div className="flex-1">{children}</div>
+          </div>
+        </main>
+      </div>
+    </SidebarProvider>
   );
 };
 

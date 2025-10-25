@@ -29,7 +29,7 @@ export default function ProjectHeader({
   project: Project;
 }) {
   return (
-    <header className="fixed top-0 left-0 w-full flex justify-between items-center  text-neutral-100 px-6 py-3 border-b border-cardCB/80 backdrop-blur-sm">
+    <header className="fixed top-0 left-0 w-full flex justify-between items-center  text-neutral-100 px-2 py-3 border-b border-cardCB/80 backdrop-blur-sm">
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
           <Image
@@ -65,12 +65,9 @@ export default function ProjectHeader({
       </div>
 
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-3 mr-2">
+        <div className="flex items-center gap-3 ">
           <button className="p-2 text-sm font-light border border-gray-800 rounded-lg hover:bg-gray-800">
             Feedback
-          </button>
-          <button className="p-2 rounded-lg hover:bg-gray-800">
-            <Settings className="w-5 h-5 text-gray-400" />
           </button>
         </div>
 
