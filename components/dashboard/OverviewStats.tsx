@@ -65,29 +65,35 @@ export default async function OverviewStats({ orgId }: OverviewStatsProps) {
     }).format(cents / 100);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <StatCard
-        title="Total Requests Made"
-        amount={String(totalRequests ?? 0)}
-        description="All requests created in this workspace"
-        icon={<ListTodo className="text-blue-500" />}
-        variant="success"
-        showBadge={false}
-      />
-      <StatCard
-        title="Total Secured"
-        amount={formatCurrency(securedCents)}
-        description="Funds held safely in escrow"
-        icon={<ShieldCheck className="text-emerald-500" />}
-        variant="success"
-      />
-      <StatCard
-        title="Total Payout Made"
-        amount={formatCurrency(payoutMadeCents)}
-        description="Released payouts completed"
-        icon={<Wallet className="text-purple-500" />}
-        variant="released"
-      />
+    <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1 lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0">
+      <div className="min-w-[260px] shrink-0 snap-start md:min-w-0 md:shrink">
+        <StatCard
+          title="Total Requests Made"
+          amount={String(totalRequests ?? 0)}
+          description="All requests created in this workspace"
+          icon={<ListTodo className="text-blue-500" />}
+          variant="success"
+          showBadge={false}
+        />
+      </div>
+      <div className="min-w-[260px] shrink-0 snap-start md:min-w-0 md:shrink">
+        <StatCard
+          title="Total Secured"
+          amount={formatCurrency(securedCents)}
+          description="Funds held safely in escrow"
+          icon={<ShieldCheck className="text-emerald-500" />}
+          variant="success"
+        />
+      </div>
+      <div className="min-w-[260px] shrink-0 snap-start md:min-w-0 md:shrink">
+        <StatCard
+          title="Total Payout Made"
+          amount={formatCurrency(payoutMadeCents)}
+          description="Released payouts completed"
+          icon={<Wallet className="text-purple-500" />}
+          variant="released"
+        />
+      </div>
     </div>
   );
 }
