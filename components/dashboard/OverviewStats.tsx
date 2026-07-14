@@ -65,7 +65,7 @@ export default async function OverviewStats({ orgId }: OverviewStatsProps) {
     }).format(cents / 100);
 
   return (
-    <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1 lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0">
+    <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1 md:grid md:grid-cols-3 md:overflow-visible md:pb-0">
       <div className="min-w-[260px] shrink-0 snap-start md:min-w-0 md:shrink">
         <StatCard
           title="Total Requests Made"
