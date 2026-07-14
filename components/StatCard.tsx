@@ -28,7 +28,7 @@ export function StatCard({ title, amount, description, icon, variant, showBadge 
   const badge = badgeConfig[variant];
 
   return (
-    <div className="bg-cardC/50 border border-cardCB rounded-2xl p-6 shadow-sm">
+    <div className="bg-cardC/50 border border-cardCB rounded-2xl p-6 shadow-sm w-full">
       <div className="flex justify-between items-start mb-4">
         <div className="p-2 rounded-lg bg-white/5 border border-white/10">
           {icon}
